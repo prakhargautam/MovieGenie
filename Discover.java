@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Discover extends Activity {
-    private String entertain;
+    private static String entertain;
     ListView lv;
     //MovieListAdapter adapterlv;
     private static String yr;
@@ -30,15 +30,17 @@ public class Discover extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
-        Intent intent=getIntent();
-        if(intent.getStringExtra("entertain")==null)
-        {
-            entertain=new String("movie");
-        }
-        else
-        {
-            entertain=intent.getStringExtra("entertain");
-        }
+
+//        Intent intent=getIntent();
+//        if(intent.getStringExtra("entertain")==null)
+//        {
+//            entertain=new String("movie");
+//        }
+//        else
+//        {
+//            entertain=intent.getStringExtra("entertain");
+//        }
+        entertain=new String("movie");
         yr=new String("2015");
         pop=new String("popularity.desc");
 
@@ -58,14 +60,7 @@ public class Discover extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 yr = parent.getItemAtPosition(position).toString();
-                if(pop.equals("Popularity Ascending"))
-                {
-                    pop="popularity.asc";
-                }
-                else
-                {
-                    pop="popularity.desc";
-                }
+
                 if(entertain.equals("movie"))
                 {
                     movieDisplay();
@@ -105,6 +100,14 @@ public class Discover extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 pop=parent.getItemAtPosition(position).toString();
+                if(pop.equals("Popularity Ascending"))
+                {
+                    pop="popularity.asc";
+                }
+                else
+                {
+                    pop="popularity.desc";
+                }
                 if(entertain.equals("movie"))
                 {
                     movieDisplay();
@@ -209,10 +212,8 @@ public class Discover extends Activity {
         {
             if(!entertain.equals("movie"))
             {
-                Intent intent=new Intent();
-                intent.setClass(Discover.this,Discover.class);
-                intent.putExtra("entertain", "movie");
-                startActivity(intent);
+                entertain="movie";
+                movieDisplay();
             }
 
         }
@@ -220,10 +221,8 @@ public class Discover extends Activity {
         {
             if(entertain.equals("movie"))
             {
-                Intent intent=new Intent();
-                intent.setClass(Discover.this,Discover.class);
-                intent.putExtra("entertain","tv");
-                startActivity(intent);
+                entertain="tv";
+                tvDisplay();
             }
         }
         return true;
